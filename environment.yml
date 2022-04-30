@@ -1,0 +1,12 @@
+name: env1.0.0
+
+channels:
+  - defaults
+  
+dependencies:
+  - pip
+  - python
+  - pip:
+    - tensorflow
+
+  

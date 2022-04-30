@@ -1,0 +1,17 @@
+FROM nvidia/cuda:10.2-runtime-ubuntu18.04
+
+RUN apt-get update && apt-get install -y wget
+
+ARG CONDA_INSTALLER=https://repo.anaconda.com/miniconda/Miniconda3-py38_4.9.2-Linux-x86_64.sh
+RUN wget $CONDA_INSTALLER -O ~/conda.sh --no-check-certificate
+
+RUN apt-get install -y --no-install-recommends \
+bzip2 && bash ~/conda.sh -b -p /opt/conda
+
+ARG ENV_CONDA=env1.0.0
+
+COPY environment.yml /environment.yml
+RUN /opt/conda/bin/conda env create --name $ENV_CONDA --file /environment.yml
+
+# just to check if environment is created properly
+RUN /opt/conda/envs/${ENV_CONDA}/bin/pip install matplotlib
